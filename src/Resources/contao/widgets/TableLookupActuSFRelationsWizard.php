@@ -12,7 +12,7 @@
 
 namespace Contao;
 
-class TableLookupAsfRelationsWizard extends \TableLookupWizard
+class TableLookupActuSFRelationsWizard extends \TableLookupWizard
 {
 
     /**

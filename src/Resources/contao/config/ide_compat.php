@@ -22,5 +22,5 @@ namespace {
 }
 
 namespace {
-    class TableLookupAsfRelationsWizard extends \Contao\TableLookupAsfRelationsWizard {}
+    class TableLookupActuSFRelationsWizard extends \Contao\TableLookupActuSFRelationsWizard {}
 }

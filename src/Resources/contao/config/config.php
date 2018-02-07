@@ -14,4 +14,4 @@
 /**
  * Backend form fields
  */
-$GLOBALS['BE_FFL']['tableLookupAsfRelations'] = 'TableLookupAsfRelationsWizard';
+$GLOBALS['BE_FFL']['tableLookupActuSFRelations'] = 'TableLookupActuSFRelationsWizard';
