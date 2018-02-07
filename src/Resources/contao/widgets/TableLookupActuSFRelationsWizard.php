@@ -1,16 +1,18 @@
 <?php
 
 /**
- * Extension for Contao Open Source CMS
+ * This file is part of the ActuSF Relations bundle designed for Contao 4.
  *
- * Copyright (C) 2013 - 2015 terminal42 gmbh
- *
- * @package    TableLookupWizard
- * @link       http://www.terminal42.ch
+ * Copyright (c) 2016-2018 Addictic
+ * @package    Widgets
+ * @link       https://www.addictic.fr
+ * @author     Vianney CHANOUX <vchanoux@addictic.fr>
+ * @author     Quentin GIRAUD <qgiraud@addictic.fr>
  * @license    http://opensource.org/licenses/lgpl-3.0.html LGPL
  */
 
 namespace Contao;
+
 
 class TableLookupActuSFRelationsWizard extends \TableLookupWizard
 {

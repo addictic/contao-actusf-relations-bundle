@@ -8,6 +8,7 @@
  * @link       https://www.addictic.fr
  * @author     Vianney CHANOUX <vchanoux@addictic.fr>
  * @author     Quentin GIRAUD <qgiraud@addictic.fr>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html LGPL
  */
 
 
