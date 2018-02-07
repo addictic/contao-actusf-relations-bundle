@@ -134,4 +134,43 @@ class TableLookupAsfRelationsWizard extends \TableLookupWizard
 
         return $objTemplate->parse();
     }
+
+    /**
+     * Get the results
+     *
+     * @return array
+     */
+    protected function getResults()
+    {
+        $arrResults = array();
+
+        if ($this->arrWhereProcedure && !empty($this->arrWhereProcedure)) {
+            $objResults = \Database::getInstance()
+                ->prepare(implode(' ', $this->arrQueryProcedure))
+                ->execute($this->arrQueryValues);
+
+            while ($objResults->next()) {
+                $arrRow                         = $objResults->row();
+                $strKey                         = $arrRow[$this->foreignTable . '_id'];
+                $arrResults[$strKey]['rowId']   = $arrRow[$this->foreignTable . '_rel'] . '__' . $arrRow[$this->foreignTable . '_id'] . '__' . $arrRow[$this->foreignTable . '_title'] . '__' . $arrRow[$this->foreignTable . '_type'];
+                $arrResults[$strKey]['rawData'] = $arrRow;
+                $arrResults[$strKey]['table']   = $this->typeRelation;
+
+                // Mark checked if not ajax call
+                if (!$this->blnIsAjaxRequest) {
+                    $arrResults[$strKey]['isChecked'] = $this->optionChecked($arrRow[$this->foreignTable . '_id'],
+                        $this->varValue);
+                }
+
+                foreach ($this->arrListFields as $strField) {
+                    list($strTable, $strColumn) = explode('.', $strField);
+                    $strFieldKey                                        = str_replace('.', '_', $strField);
+                    $arrResults[$strKey]['formattedData'][$strFieldKey] = \Haste\Util\Format::dcaValue($strTable,
+                        $strColumn, $arrRow[$strFieldKey]);
+                }
+            }
+        }
+
+        return $arrResults;
+    }
 }
