@@ -218,4 +218,43 @@ class TableLookupAsfRelationsWizard extends \TableLookupWizard
             $this->arrQueryProcedure[] = 'FROM ' . $this->foreignTable;
         }
     }
+
+    /**
+     * Prepares the WHERE statement
+     */
+    protected function prepareWhere()
+    {
+        $arrKeywords = trimsplit(' ', \Input::get('keywords'));
+        $varData     = \Input::get($this->strName);
+
+        // Handle keywords
+        foreach ($arrKeywords as $strKeyword) {
+            if (!$strKeyword) {
+                continue;
+            }
+
+            $this->arrWhereProcedure[] = '(' . implode(' LIKE ? OR ', $this->arrSearchFields) . ' LIKE ?)';
+            $this->arrWhereValues      = array_merge($this->arrWhereValues,
+                array_fill(0, count($this->arrSearchFields), '%' . $strKeyword . '%'));
+        }
+
+        // Filter those that have already been chosen
+        if ($this->fieldType == 'checkbox' && is_array($varData) && !empty($varData)) {
+            $this->arrWhereProcedure[] = $this->foreignTable . '.id NOT IN (' . implode(',', $varData) . ')';
+        } elseif ($this->fieldType == 'radio' && $varData != '') {
+            $this->arrWhereProcedure[] = "{$this->foreignTable}.id!='$varData'";
+        }
+
+        // If custom WHERE is set, add it to the statement
+        if ($this->sqlWhere) {
+            $this->arrWhereProcedure[] = $this->sqlWhere;
+        }
+
+        if (!empty($this->arrWhereProcedure)) {
+            $strWhere = implode(' OR ', $this->arrWhereProcedure);
+
+            $this->arrQueryProcedure[] = 'WHERE ' . $strWhere;
+            $this->arrQueryValues      = array_merge($this->arrQueryValues, $this->arrWhereValues);
+        }
+    }
 }
