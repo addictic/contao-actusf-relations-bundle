@@ -257,4 +257,70 @@ class TableLookupAsfRelationsWizard extends \TableLookupWizard
             $this->arrQueryValues      = array_merge($this->arrQueryValues, $this->arrWhereValues);
         }
     }
+
+    /**
+     * @param bool $arrResults
+     * @return $arr
+     */
+    protected function getResultsForHeadlines($arrResults = false)
+    {
+        $arrMergeResult   = array();
+        $arrResultsEvents = array();
+        if ($arrResults && is_array($arrResults)) {
+
+            $arrSelects = $this->getArrSelects('tl_asf_events');
+
+            // Build SQL
+            $query_event = 'SELECT ' . implode(', ', $arrSelects) . ' FROM tl_asf_events WHERE published = 1';
+
+            $objResultsEvents = \Database::getInstance()
+                ->prepare($query_event)
+                ->execute();
+
+            while ($objResultsEvents->next()) {
+                $tableRef = 'tl_asf_events';
+                $arrRow   = $objResultsEvents->row();
+                $strKey   = $arrRow[$this->foreignTable . '_id'];
+
+                $arrResultsEvents[$strKey]['rowId']                        = $tableRef . '__' . $arrRow[$tableRef . '_id'] . '__' . $arrRow[$tableRef . '_title'] . '__événement';
+                $arrResultsEvents[$strKey]['rawData']                      = $arrRow;
+                $arrResultsEvents[$strKey]['rawData'][$tableRef . '_type'] = "événement";
+                $arrResultsEvents[$strKey]['table']                        = 'events';
+
+                // Mark checked if not ajax call
+                if (!$this->blnIsAjaxRequest) {
+                    $arrResultsEvents[$strKey]['isChecked'] = $this->optionChecked($arrRow[$tableRef . '_id'],
+                        $this->varValue);
+                }
+
+                foreach ($this->arrListFields as $strField) {
+                    $strField = $this->setGoodTable($strField, $tableRef);
+                    list($strTable, $strColumn) = explode('.', $strField);
+                    $strFieldKey = str_replace('.', '_', $strField);
+                    if ($strColumn == 'type') {
+                        $arrRow[$strFieldKey] = 'Evenement';
+                    }
+                    $arrResultsEvents[$strKey]['formattedData'][$strFieldKey] = \Haste\Util\Format::dcaValue($strTable,
+                        $strColumn, $arrRow[$strFieldKey]);
+                }
+            }
+
+            $arrMergeResult = array_merge($arrResults, $arrResultsEvents);
+        }
+
+        return $arrMergeResult;
+    }
+
+    /**
+     * Overwrite this origine strField
+     *
+     * @param $strField
+     * @return string
+     */
+    protected function setGoodTable($strField, $strNewTable)
+    {
+        $arrField    = explode('.', $strField);
+        $arrField[0] = $strNewTable;
+        return $arrField[0] . "." . $arrField[1];
+    }
 }
