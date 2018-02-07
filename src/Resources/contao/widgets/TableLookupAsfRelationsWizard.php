@@ -173,4 +173,49 @@ class TableLookupAsfRelationsWizard extends \TableLookupWizard
 
         return $arrResults;
     }
+
+    /**
+     * @param bool $otherTable
+     * @return array
+     */
+    protected function getArrSelects($otherTable = false)
+    {
+        if (!$otherTable) {
+            $arrSelects = array($this->foreignTable . '.id AS ' . $this->foreignTable . '_id');
+
+            foreach ($this->arrListFields as $strField) {
+                $arrSelects[] = $strField . ' AS ' . str_replace('.', '_', $strField);
+            }
+            // Cas personalisés
+        } else {
+            $arrSelects = array($otherTable . '.id AS ' . $otherTable . '_id');
+
+            foreach ($this->arrListFields as $strField) {
+                $arrField = explode(".", $strField);
+                if ($arrField[1] != 'type') {
+                    $arrField[0] = $otherTable;
+                    $strField    = implode(".", $arrField);
+
+                    $arrSelects[] = $strField . ' AS ' . str_replace('.', '_', $strField);
+                }
+            }
+        }
+        return $arrSelects;
+    }
+
+    /**
+     * Prepares the SELECT statement
+     */
+    protected function prepareSelect()
+    {
+        $arrSelects = $this->getArrSelects();
+
+        // Build SQL statement
+        $this->arrQueryProcedure[] = 'SELECT ' . implode(', ', $arrSelects);
+        if ($this->typeRelation) {
+            $this->arrQueryProcedure[] = 'FROM tl_asf_relations';
+        } else {
+            $this->arrQueryProcedure[] = 'FROM ' . $this->foreignTable;
+        }
+    }
 }
