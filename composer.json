@@ -1,7 +1,7 @@
 {
     "name": "addictic/contao-actusf-relations-bundle",
     "description": "Override of terminal42/contao-tablelookupwizard to handle ActuSF special relations",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "type": "contao-bundle",
     "keywords": [
         "contao",
