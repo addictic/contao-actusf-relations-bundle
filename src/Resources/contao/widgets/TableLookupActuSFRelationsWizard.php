@@ -73,11 +73,11 @@ class TableLookupActuSFRelationsWizard extends \TableLookupWizard
             $response->send();
         }
 
-        $GLOBALS['TL_CSS'][] = 'system/modules/tablelookupwizard/assets/tablelookup.min.css';
+        $GLOBALS['TL_CSS'][] = 'bundles/terminal42contaotablelookupwizard/tablelookup.min.css';
 
         // Vianney : Si c'est '1' au chargement de la page, alors tablelinks.min.js est en 404 (testing by class Input get)
         if (!$blnNoAjax) {
-            $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/tablelookupwizard/assets/tablelookup.min.js';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/terminal42contaotablelookupwizard/tablelookup.min.js';
         }
 
         // Si il y a des relations, le fonctionnement est différent
