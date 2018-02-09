@@ -1,7 +1,7 @@
 # contao-actusf-relations-bundle
 Override of terminal42/contao-tablelookupwizard to handle ActuSF special relations.
 
-You need to add the forked repository (until it's merged) in your root composer.json :
+You need to add the forked repository in your root composer.json :
 ```json
 "repositories": [
     {
@@ -10,3 +10,5 @@ You need to add the forked repository (until it's merged) in your root composer.
     }
 ]
 ```
+
+Aswell as using the develop-bundle branch.
