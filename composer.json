@@ -1,7 +1,6 @@
 {
     "name": "addictic/contao-actusf-relations-bundle",
     "description": "Override of terminal42/contao-tablelookupwizard to handle ActuSF special relations",
-    "version": "1.0.0",
     "type": "contao-bundle",
     "keywords": [
         "contao",
@@ -32,7 +31,7 @@
     "require":{
         "php": "^7.1",
         "contao/core-bundle": "^4.4",
-        "terminal42/contao-tablelookupwizard": "dev-develop as 3.2.1"
+        "terminal42/contao-tablelookupwizard": "dev-develop-bundle as 3.2.1"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0"
@@ -44,16 +43,7 @@
     "autoload": {
         "psr-4": {
             "Addictic\\ContaoActuSFRelationsBundle\\": "src/"
-        },
-        "classmap": [
-            "src/Resources/contao/"
-        ],
-        "exclude-from-classmap": [
-            "src/Resources/contao/config/",
-            "src/Resources/contao/dca/",
-            "src/Resources/contao/languages/",
-            "src/Resources/contao/templates/"
-        ]
+        }
     },
     "extra":{
         "contao-manager-plugin": "Addictic\\ContaoActuSFRelationsBundle\\ContaoManager\\Plugin"

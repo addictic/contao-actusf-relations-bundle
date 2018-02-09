@@ -15,4 +15,4 @@
 /**
  * Backend form fields
  */
-$GLOBALS['BE_FFL']['tableLookupActuSFRelations'] = 'TableLookupActuSFRelationsWizard';
+$GLOBALS['BE_FFL']['tableLookupActuSFRelations'] = 'Addictic\\ContaoActuSFRelationsBundle\\TableLookupActuSFRelationsWizard';

@@ -11,10 +11,12 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html LGPL
  */
 
-namespace Contao;
+namespace Addictic\ContaoActuSFRelationsBundle;
+
+use Terminal42\ContaoTableLookupWizard\TableLookupWizard;
 
 
-class TableLookupActuSFRelationsWizard extends \TableLookupWizard
+class TableLookupActuSFRelationsWizard extends TableLookupWizard
 {
 
     /**
