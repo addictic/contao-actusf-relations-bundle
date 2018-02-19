@@ -320,24 +320,24 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
         $arrResultsEvents = array();
         if ($arrResults && is_array($arrResults)) {
 
-            $arrSelects = $this->getArrSelects('tl_asf_events');
+            $arrSelects = $this->getArrSelects('tl_asf_event');
 
             // Build SQL
-            $query_event = 'SELECT ' . implode(', ', $arrSelects) . ' FROM tl_asf_events WHERE published = 1';
+            $query_event = 'SELECT ' . implode(', ', $arrSelects) . ' FROM tl_asf_event WHERE published = 1';
 
             $objResultsEvents = \Database::getInstance()
                 ->prepare($query_event)
                 ->execute();
 
             while ($objResultsEvents->next()) {
-                $tableRef = 'tl_asf_events';
+                $tableRef = 'tl_asf_event';
                 $arrRow   = $objResultsEvents->row();
                 $strKey   = $arrRow[$this->foreignTable . '_id'];
 
                 $arrResultsEvents[$strKey]['rowId']                        = $tableRef . '__' . $arrRow[$tableRef . '_id'] . '__' . $arrRow[$tableRef . '_title'] . '__événement';
                 $arrResultsEvents[$strKey]['rawData']                      = $arrRow;
                 $arrResultsEvents[$strKey]['rawData'][$tableRef . '_type'] = "événement";
-                $arrResultsEvents[$strKey]['table']                        = 'events';
+                $arrResultsEvents[$strKey]['table']                        = 'event';
 
                 // Mark checked if not ajax call
                 if (!$this->blnIsAjaxRequest) {
