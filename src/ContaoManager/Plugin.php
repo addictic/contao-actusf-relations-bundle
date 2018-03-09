@@ -30,7 +30,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(AddicticContaoActuSFRelationsBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class, Terminal42ContaoTableLookupWizard::class])
+                        ->setLoadAfter([ContaoCoreBundle::class, Terminal42ContaoTableLookupWizard::class])
         ];
     }
 }

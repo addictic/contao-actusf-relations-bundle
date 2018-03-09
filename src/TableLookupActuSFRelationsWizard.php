@@ -157,11 +157,11 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
             $arrResults = $this->getResults();
 
             \Haste\Generator\RowClass::withKey('rowClass')
-                ->addCustom('row')
-                ->addCount('row_')
-                ->addFirstLast('row_')
-                ->addEvenOdd('row_')
-                ->applyTo($arrResults);
+                                     ->addCustom('row')
+                                     ->addCount('row_')
+                                     ->addFirstLast('row_')
+                                     ->addEvenOdd('row_')
+                                     ->applyTo($arrResults);
         }
 
         if (!empty($arrResults)) {
@@ -198,8 +198,8 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
 
         if ($this->arrWhereProcedure && !empty($this->arrWhereProcedure)) {
             $objResults = \Database::getInstance()
-                ->prepare(implode(' ', $this->arrQueryProcedure))
-                ->execute($this->arrQueryValues);
+                                   ->prepare(implode(' ', $this->arrQueryProcedure))
+                                   ->execute($this->arrQueryValues);
 
             while ($objResults->next()) {
                 $arrRow                         = $objResults->row();
@@ -211,14 +211,15 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
                 // Mark checked if not ajax call
                 if (!$this->blnIsAjaxRequest) {
                     $arrResults[$strKey]['isChecked'] = $this->optionChecked($arrRow[$this->foreignTable . '_id'],
-                        $this->varValue);
+                                                                             $this->varValue);
                 }
 
                 foreach ($this->arrListFields as $strField) {
                     list($strTable, $strColumn) = explode('.', $strField);
                     $strFieldKey                                        = str_replace('.', '_', $strField);
                     $arrResults[$strKey]['formattedData'][$strFieldKey] = \Haste\Util\Format::dcaValue($strTable,
-                        $strColumn, $arrRow[$strFieldKey]);
+                                                                                                       $strColumn,
+                                                                                                       $arrRow[$strFieldKey]);
                 }
             }
         }
@@ -287,7 +288,8 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
 
             $this->arrWhereProcedure[] = '(' . implode(' LIKE ? OR ', $this->arrSearchFields) . ' LIKE ?)';
             $this->arrWhereValues      = array_merge($this->arrWhereValues,
-                array_fill(0, count($this->arrSearchFields), '%' . $strKeyword . '%'));
+                                                     array_fill(0, count($this->arrSearchFields),
+                                                                '%' . $strKeyword . '%'));
         }
 
         // Filter those that have already been chosen
@@ -326,8 +328,8 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
             $query_event = 'SELECT ' . implode(', ', $arrSelects) . ' FROM tl_asf_event WHERE published = 1';
 
             $objResultsEvents = \Database::getInstance()
-                ->prepare($query_event)
-                ->execute();
+                                         ->prepare($query_event)
+                                         ->execute();
 
             while ($objResultsEvents->next()) {
                 $tableRef = 'tl_asf_event';
@@ -342,7 +344,7 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
                 // Mark checked if not ajax call
                 if (!$this->blnIsAjaxRequest) {
                     $arrResultsEvents[$strKey]['isChecked'] = $this->optionChecked($arrRow[$tableRef . '_id'],
-                        $this->varValue);
+                                                                                   $this->varValue);
                 }
 
                 foreach ($this->arrListFields as $strField) {
@@ -353,7 +355,8 @@ class TableLookupActuSFRelationsWizard extends TableLookupWizard
                         $arrRow[$strFieldKey] = 'Evenement';
                     }
                     $arrResultsEvents[$strKey]['formattedData'][$strFieldKey] = \Haste\Util\Format::dcaValue($strTable,
-                        $strColumn, $arrRow[$strFieldKey]);
+                                                                                                             $strColumn,
+                                                                                                             $arrRow[$strFieldKey]);
                 }
             }
 
